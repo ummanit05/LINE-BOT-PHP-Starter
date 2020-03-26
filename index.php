@@ -12,7 +12,7 @@
 
 	$messages 				 = [];
 	$messages['replyToken']  = $replyToken;
-	$messages['messages'][0] = getFormatTextMessage($deCode);
+	$messages['messages'][0] = getFormatTextMessage($deCode['events'][0]['message']['text']." (BOT)");
 
 	$encodeJson = json_encode($messages);
 
