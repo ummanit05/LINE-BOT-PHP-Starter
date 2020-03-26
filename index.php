@@ -24,12 +24,25 @@
 			$file = UPLOAD_DIR . uniqid() . '.png';
 			$success = file_put_contents($file, $results['response']);
 		}
+		$returnMessage = "Photo Upload Success";
 
-	}    
+	} else if ($messageType == 'location') {
+
+		$returnMessage = $deCode['events'][0]['message']['title']." ".
+						 $deCode['events'][0]['message']['address']." ".
+						 $deCode['events'][0]['message']['latitude']." ".
+						 $deCode['events'][0]['message']['longitude']." ";
+		$returnMessage = "Your Address is ".$returnMessage;
+
+	} else if ($messageType == 'text') {
+
+		$returnMessage = $deCode['events'][0]['message']['text']." (BOT)";
+		
+	}
 
 	$messages 				 = [];
 	$messages['replyToken']  = $replyToken;
-	$messages['messages'][0] = getFormatTextMessage($deCode['events'][0]['message']['text']." (BOT)");
+	$messages['messages'][0] = getFormatTextMessage($returnMessage);
 
 	$encodeJson = json_encode($messages);
 
